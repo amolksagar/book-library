@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import cellEditFactory,{ Type } from 'react-bootstrap-table2-editor';
+import cellEditFactory,{ Type } from "react-bootstrap-table2-editor";
 
 export const productsGenerator = quantity => {
   const items = [];
@@ -12,6 +12,12 @@ export const productsGenerator = quantity => {
     items.push({ id: i, name: `Ordinarycoders course ${i}`, price: 100 + i });
   }
   return items;
+};
+
+const selectRow = {
+  mode: 'checkbox',
+  clickToSelect: true,
+  clickToEdit: true
 };
 const products = productsGenerator(100);
 const columns = [
@@ -52,10 +58,12 @@ export default function App() {
         columns={columns}
         caption={<CaptionElement />}
         pagination={paginationFactory({ sizePerPage: 5 })}
+        selectRow={ selectRow }
         cellEdit={ cellEditFactory({
-            mode: 'click',
+            mode: 'dbclick',
             blurToSave: true
           }) }
+        // cellEdit={ cellEditFactory({ mode: 'dbclick' }) }
       />
     </div>
   );
