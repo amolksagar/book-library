@@ -1,9 +1,9 @@
 import './App.css';
-import BookLibraryPaginatedComponent from './components/BookLibraryPaginatedComponent';
+import BookComponentWithPaginationLatest from './components/BookComponentWithPaginationLatest';
 
 function App() {
   return (
-    <BookLibraryPaginatedComponent/>
+    <BookComponentWithPaginationLatest/>
   );
 }
 
