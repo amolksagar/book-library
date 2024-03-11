@@ -47,6 +47,7 @@ function BookComponentWithPaginationLatest() {
           }, {
             value: 'BORROWED',
             label: 'BORROWED'
+
           }]
         }
     }
