@@ -8,13 +8,23 @@ function DeleteBookComponent({ selectedBookIds, onApiSuccess = () => {} }) {
   const BOOK_DELETE_REST_API_URL = 'http://localhost:8082/booklibrary/book-library/v1/deleteBooks';
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   const handleClose = () => {
     setShow(false);
     setLoading(false);
+    setShowWarning(false);
+    selectedBookIds.length=0;
   };
 
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    if (selectedBookIds.length===0) {
+      setShowWarning(true);
+    } else {
+      setShow(true);
+    }
+    
+  }
 
   const handleSaveChanges = async () => {
     try {
@@ -37,7 +47,7 @@ function DeleteBookComponent({ selectedBookIds, onApiSuccess = () => {} }) {
 
   return (
     <>
-      <Button variant="secondary" onClick={handleShow} disabled={false}>
+      <Button variant="secondary" onClick={handleShow} className='m-1'>
         Delete Book
       </Button>
 
@@ -56,6 +66,15 @@ function DeleteBookComponent({ selectedBookIds, onApiSuccess = () => {} }) {
             ) : (
               'Save Changes'
             )}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showWarning} onHide={handleClose} centered>
+        <Modal.Body>Please select atleast one book for Deletion?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
           </Button>
         </Modal.Footer>
       </Modal>

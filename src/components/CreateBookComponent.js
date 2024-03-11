@@ -53,7 +53,7 @@ function CreateBookComponent({onApiSuccess = () => {} }) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="primary" onClick={handleShow} className='m-1'>
         Create Book
       </Button>
 
