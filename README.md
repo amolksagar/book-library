@@ -4,7 +4,7 @@ A) **Steps to run the project in default profile**
 
 - **Step 2**:
   cd to the book-library folder.
-  Execute the command
+  Execute the command:
   **npm start**
 
 - **Step 3**:
