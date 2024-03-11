@@ -5,7 +5,8 @@ A) **Steps to run the project in default profile**
 - **Step 2**:
   cd to the book-library folder.
   Execute the command:
-  **npm start**
+  - npm install --legacy-peer-deps
+  - npm start
 
 - **Step 3**:
   Please make sure the backend application is launched as per the instructions provided in the README.md file of the booklibrary spring boot application
