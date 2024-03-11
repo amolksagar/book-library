@@ -9,7 +9,7 @@ import cellEditFactory,{ Type } from "react-bootstrap-table2-editor";
 import BookActionComponent from './BookActionComponent';
 import axios from 'axios';
 
-function BookComponentWithSort() {
+function BookComponent() {
   const [books, setBooks] = useState([])
   const [selectedBookIds, setSelectedBookIds] = useState([]);
   const [reloadParent, setReloadParent] = useState(false);
@@ -91,11 +91,21 @@ function BookComponentWithSort() {
     );
   }
 
-  const handleStatusChange = (bookId, newStatus) => {
+  const handleStatusChange = (oldValue, newValue, row, column) => {
 
-    const BOOK_UPDATE_REST_API_URL = `http://localhost:8082/booklibrary/book-library/v1/updateBook?bookId=${bookId}`;
+    let indexOfSelectedItem = -1;
+  column.editor.options.forEach((item, idx) => {
+    if (newValue === item.value) {
+      indexOfSelectedItem = idx;
+    }
+  });
+  if (indexOfSelectedItem > -1) {
+    console.log(indexOfSelectedItem);
+    console.log(row);
+    console.log(column);
+    const BOOK_UPDATE_REST_API_URL = `http://localhost:8082/booklibrary/book-library/v1/updateBook?bookId=${row.bookId}`;
     
-    axios.put(BOOK_UPDATE_REST_API_URL, { status: newStatus })
+    axios.put(BOOK_UPDATE_REST_API_URL, { status: newValue })
       .then(response => {
         // Handle success if needed
         console.log('Status updated successfully:', response.data);
@@ -104,6 +114,7 @@ function BookComponentWithSort() {
         // Handle error if needed
         console.error('Error updating status:', error);
       });
+  }
   };
 
   return (
@@ -119,7 +130,8 @@ function BookComponentWithSort() {
       selectRow={ selectRow }
       cellEdit={ cellEditFactory({
           mode: 'dbclick',
-          blurToSave: true
+          blurToSave: true,
+          afterSaveCell: handleStatusChange
         }) }
     />
   </div>
@@ -128,4 +140,4 @@ function BookComponentWithSort() {
   </>
   )
 }
-export default BookComponentWithSort
+export default BookComponent
