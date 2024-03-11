@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const BOOK_GET_REST_API_URL = 'http://localhost:8082/booklibrary/book-library/v1/books';
-
+const BOOK_GET_REST_API_URL = 'http://localhost:8082/booklibrary/book-library/v1/books?sortBy=title';
 
 class BookService{
     getBooks(){
