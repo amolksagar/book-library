@@ -1,9 +1,9 @@
 import './App.css';
-import BookComponentWithPagination from './components/BookComponentWithPagination';
+import BookComponentWithSort from './components/BookComponentWithSort';
 
 function App() {
   return (
-    <BookComponentWithPagination/>
+    <BookComponentWithSort/>
   );
 }
 

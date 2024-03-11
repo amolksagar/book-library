@@ -10,7 +10,6 @@ function CreateBookComponent({onApiSuccess = () => {} }) {
   const [show, setShow] = useState(false);
   const [bookTitle, setBookTitle] = useState('');
   const [borrowedBy, setBorrowedBy] = useState('');
-  const [status, setStatus] = useState('AVAILABLE');
   const [authorNames, setAuthorNames] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -19,7 +18,6 @@ function CreateBookComponent({onApiSuccess = () => {} }) {
     setBookTitle('');
     setBorrowedBy('');
     setAuthorNames([]);
-    setStatus('');
     setLoading(false);
   };
   const handleShow = () => setShow(true);
@@ -27,12 +25,11 @@ function CreateBookComponent({onApiSuccess = () => {} }) {
   const handleSaveChanges = async () => {
     try {
       setLoading(true);
-      setStatus('AVAILABLE');
       const response = await axios.post(BOOK_CREATE_REST_API_URL, {
         title: bookTitle,
         borrowedBy: borrowedBy,
         authors: authorNames,
-        status: status
+        status: 'AVAILABLE'
       });
       
       console.log('API Response:', response.data);

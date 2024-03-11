@@ -7,8 +7,9 @@ import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import cellEditFactory,{ Type } from "react-bootstrap-table2-editor";
 import BookActionComponent from './BookActionComponent';
+import axios from 'axios';
 
-function BookComponentWithPagination() {
+function BookComponentWithSort() {
   const [books, setBooks] = useState([])
   const [selectedBookIds, setSelectedBookIds] = useState([]);
   const [reloadParent, setReloadParent] = useState(false);
@@ -89,6 +90,22 @@ function BookComponentWithPagination() {
         }
     );
   }
+
+  const handleStatusChange = (bookId, newStatus) => {
+
+    const BOOK_UPDATE_REST_API_URL = `http://localhost:8082/booklibrary/book-library/v1/updateBook?bookId=${bookId}`;
+    
+    axios.put(BOOK_UPDATE_REST_API_URL, { status: newStatus })
+      .then(response => {
+        // Handle success if needed
+        console.log('Status updated successfully:', response.data);
+      })
+      .catch(error => {
+        // Handle error if needed
+        console.error('Error updating status:', error);
+      });
+  };
+
   return (
     <>
     <div className="App">
@@ -104,7 +121,6 @@ function BookComponentWithPagination() {
           mode: 'dbclick',
           blurToSave: true
         }) }
-      // cellEdit={ cellEditFactory({ mode: 'dbclick' }) }
     />
   </div>
 
@@ -112,4 +128,4 @@ function BookComponentWithPagination() {
   </>
   )
 }
-export default BookComponentWithPagination
+export default BookComponentWithSort
