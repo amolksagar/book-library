@@ -21,3 +21,4 @@ A) **Steps to run the project in default profile**
         - The Update Book status works as shown below.Double click on the particular cell that you want to change and continue with other operations
           The update API will be called onBlur event
             - ![alt text](image.png)
+        - Sorting has been implemented both on client and server side based on Book Title
