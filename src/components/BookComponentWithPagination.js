@@ -6,13 +6,16 @@ import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import cellEditFactory,{ Type } from "react-bootstrap-table2-editor";
+import BookActionComponent from './BookActionComponent';
 
-function BookComponentWithPaginationLatest() {
+function BookComponentWithPagination() {
   const [books, setBooks] = useState([])
+  const [selectedBookIds, setSelectedBookIds] = useState([]);
+  const [reloadParent, setReloadParent] = useState(false);
   
   useEffect(() => {
     getBooks()
-  }, [])
+  }, [reloadParent])
   
   const columns = [
     {
@@ -22,13 +25,14 @@ function BookComponentWithPaginationLatest() {
     {
       dataField: "title",
       text: "Title",
-      editable: false
+      editable: false,
+      sort: true
     },
     {
       dataField: "authors",
       text: "Authors",
       editable: false,
-      formatter: (cell, row) => cell.map(author => `${author.firstName} ${author.middleName || ''} ${author.lastName}`).join(', ')
+      formatter: (cell, row) => cell.map(author => `${author}`).join(', ')
     }
     ,
     {
@@ -56,7 +60,23 @@ function BookComponentWithPaginationLatest() {
   const selectRow = {
     mode: 'checkbox',
     clickToSelect: true,
-    clickToEdit: true
+    clickToEdit: true,
+    onSelect: (row, isSelect, rowIndex, e) => {
+      if (isSelect) {
+        setSelectedBookIds([...selectedBookIds, row.bookId]);
+      } else {
+        setSelectedBookIds(selectedBookIds.filter(id => id !== row.bookId));
+      }
+    },
+    onSelectAll: (isSelect, rows, e) => {
+      const ids = isSelect ? rows.map(row => row.bookId) : [];
+      setSelectedBookIds(ids);
+    }
+  };
+
+  const handleReloadParent = () => {
+    console.log('Value of Reload Parent',reloadParent);
+    setReloadParent(!reloadParent);
   };
 
   const CaptionElement = () => <h3 style={{ borderRadius: '0.25em', textAlign: 'center', color: 'purple', border: '1px solid purple', padding: '0.5em' }}>RNSW Book Library</h3>;
@@ -70,6 +90,7 @@ function BookComponentWithPaginationLatest() {
     );
   }
   return (
+    <>
     <div className="App">
     <BootstrapTable
       bootstrap4
@@ -86,6 +107,9 @@ function BookComponentWithPaginationLatest() {
       // cellEdit={ cellEditFactory({ mode: 'dbclick' }) }
     />
   </div>
+
+   <BookActionComponent selectedBookIds={selectedBookIds} onReloadParent={handleReloadParent} />
+  </>
   )
 }
-export default BookComponentWithPaginationLatest
+export default BookComponentWithPagination
