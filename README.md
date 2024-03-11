@@ -15,4 +15,6 @@ A) **Steps to run the project in default profile**
     - Functionalities
         - Create Book: Persists a Book record into the backend H2 DB via the spring boot application
         - Delete Book: Deletes the persisted Book record
-        - ![alt text](image.png)
+        - The Update Book status works as shown below.Double click on the particular cell that you want to change and continue with other operations
+          The update API will be called onBlur event
+            - ![alt text](image.png)
